@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience</title>
+    <link rel="shortcut icon" href="./assets/images/logo.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=K2D&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/harry-potter" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<body style='margin : 0px;'>
+    <div class="row">
+        <div class="exp-page page center">
+            <div class="img-block">
+                <div class="harry-font font-header glow">
+                    <span style="display: inline-block; margin-top: 10px;">Experience</span>
+                </div>
+                <div class="contact-text k2d-regular exp-text">
+                    <div class="yellow"> การศึกษา : </div>
+
+                    <div class="mb-2">
+                        <img src="./assets/images/ORA.png" style="width: 45%;"> <br>
+                        โรงเรียน ยอแซฟอุปถัมภ์
+                    </div>
+
+                    <div class="mb-2">
+                        <img src="./assets/images/Swb.png" style="width: 45%;"> <br>
+                        โรงเรียนสารสาสน์วิเทศบางบอน
+                    </div>
+
+                    <div class="mb-2">
+                        <img src="./assets/images/witaedthon.png" style="width: 25%;"> <br>
+                        โรงเรียนสารสานสน์วิเทศธนบุรี
+                    </div>
+
+                    <div class="mb-2">
+                        <img src="./assets/images/SW3.png" style="width: 25%;"> <br> โรงเรียนนวมินทราชินูทิศ
+                        สตรีวิทยา พุทธมณฑล
+                    </div>
+
+                    <div class="mb-2">
+                        <img src="./assets/images/ACT.png"> <br>
+                        โรงเรียนอัสสัมชัญธนบุรี
+                    </div>
+
+                    <div class="yellow">
+                        การฝึกงาน :
+                    </div>
+
+                    <div class="mb-2">
+                        ได้เรียนรู้ตำแหน่งฝ่ายขายระบบหลังบ้านและ R&D
+                    </div>
+
+                    <div class="yellow">
+                        การอบรม :
+                    </div>
+
+                    <div class="mb-2">
+                        อบรมการทำเว็บโดยใช้ Visual-studio
+                    </div>
+                </div>
+                <div class="container text-center"></div>
+                    <div class="row">
+                        <div class="col-lg-12 k2d-regular">
+                            <p>
+                                <a href="/portfolio" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/portfolio.png" />
+                                    <span>Portfolio</span>
+                                </a>
+                                <a href="/home" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/home.png" />
+                                    <span>Home</span>
+                                </a>
+                                <a href="/contact" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/contact.png" />
+                                    <span>Contact</span>
+                                </a>
+                                <a href="/projects" class="harry-font font-select btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/project.png" />
+                                    <span>Projects</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgm" src="./assets/sounds/BGM.wav" preload="auto" autoplay loop></audio>
+
+    <script>
+        //---------------------------Reload when screen size change--------------------------------------------
+        $(window).bind('resize', function(e)
+        {
+            this.location.reload(false);
+        });
+
+        //---------------------------check size for computer / mobile--------------------------------------------
+        function isMobile() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
+        if (isMobile()) {
+            document.querySelector('.contact-text').style.fontSize = '16px';
+        }
+        else{
+            // document.querySelector('.page').style.height = '100vh';
+        }
+
+    </script>
+
+</body>
+</head>
+
+</html>

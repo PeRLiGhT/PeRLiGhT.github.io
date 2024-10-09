@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="shortcut icon" href="./assets/images/logo.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=K2D&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/harry-potter" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<body style='margin : 0px;'>
+    <div class="row">
+        <div class="contact-page page center">
+            <div class="img-block center">
+                <div class="harry-font font-header glow">
+                    <span style="display: inline-block; margin-top: 10px;">Contact</span>
+                </div>
+
+                <div class="container mt-4">
+                    <div class="row" id="contact">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 text-center">
+                            <ul class="faicons animate__animated animate__bounce animate__infinite">
+                                <li class="block_1" id="phone"><a href="#"><i class="fa fa-phone fa-2x"></i></a></li>
+                                <li class="block_4" id="line"><a href="#"><i class="fab fa-google fa-2x"></i></a></li>
+                                <li class="block_3" id="facebook"><a href="#"><i class="fab fa-facebook fa-2x"></i></a></li>
+                                <li class="block_6" id="gmail"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                                <li class="block_2" id="twitch"><a href="#"><i class="fab fa-line fa-2x"></i></a></li>
+                                <li class="block_5" id="ig"><a href="#"><i class="fab fa-twitch fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row center">
+                        <div class="col-md-12 k2d-regular">
+                            <h3 class="animate__animated animate__bounceIn" id="placeholder">Hello I'm Perlight.</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-lg-12 k2d-regular">
+                            <p>
+                                <a href="/portfolio" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/portfolio.png" />
+                                    <span>Portfolio</span>
+                                </a>
+                                <a href="/home" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/home.png" />
+                                    <span>Home</span>
+                                </a>
+                                <a href="/Experience" class="btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/experience.png" />
+                                    <span>Experience</span>
+                                </a>
+                                <a href="/projects" class="harry-font font-select btn btn-squared-default-plain btn-success mt-3">
+                                    <img style="width: 80%" src="./assets/images/project.png" />
+                                    <span>Projects</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgm" src="./assets/sounds/BGM.wav" preload="auto" autoplay loop></audio>
+    <audio id="hoverSound" src="./assets/sounds/Button.mp3"></audio>
+
+    <script>
+        //---------------------------Reload when screen size change--------------------------------------------
+        $(window).bind('resize', function(e)
+        {
+            this.location.reload(false);
+        });
+
+        //---------------------------check size for computer / mobile--------------------------------------------
+        function isMobile() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
+        if (isMobile()) {
+            document.querySelector('.page').style.height = '100vh';
+        }
+        else {
+            document.querySelector('.page').style.height = '100vh';
+        } 
+
+        //-------------------------------click icon to show name--------------------------------------------------
+        document.addEventListener("DOMContentLoaded", function() {
+            var placeholder = document.getElementById("placeholder");
+            var icons = document.querySelectorAll(".faicons li");
+
+            icons.forEach(function(icon) {
+                icon.addEventListener("click", function() {
+                var className = icon.className;
+
+                    icons.forEach(function(icon) {
+                        icon.classList.remove("active");
+                    });
+
+                    icon.classList.add("active");
+
+                    placeholder.classList.remove("animate__bounceIn");
+                    void placeholder.offsetWidth;
+                    placeholder.classList.add("animate__bounceIn");
+
+                     switch (className) {
+                        case "block_1":
+                            placeholder.textContent = "0863481843";
+                            break;
+                        case "block_2":
+                            placeholder.textContent = "preamchung";
+                            break;
+                        case "block_3":
+                            placeholder.textContent = "Preammy Perlight";
+                            break;
+                        case "block_4":
+                            placeholder.textContent = "punratsameethon_y@silpakorn.edu";
+                            break;
+                        case "block_5":
+                            placeholder.textContent = "http://twicth.tv/perlight/home";
+                            break;
+                        case "block_6":
+                            placeholder.textContent = "pream.ydn";
+                            break;
+                        default:
+                            placeholder.textContent = "Hello I'm Perlight.";
+                    }
+                });
+            });
+        });
+
+        //---------------------------Hover icon sound-------------------------------------------------------------
+        const links1 = ['phone', 'line', 'facebook', 'gmail', 'twitch', 'ig'];
+
+        links1.forEach(linkId => {
+            document.getElementById(linkId).addEventListener('click', function() {
+                hoverSound.currentTime = 0;
+                hoverSound.play();
+            });
+        });
+
+    </script>
+
+</body>
+</head>
+
+</html>
