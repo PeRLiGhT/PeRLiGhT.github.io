@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyshub</title>
+  <link rel="shortcut icon" href="./assets/images/logo.ico" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Kanit&family=Righteous&display=swap"
+    rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    crossorigin="anonymous" />
+
+</head>
+
+<body class="kanit-regular" style="margin: 0px; background-color:#d4d4d4;">
+  <!-- navbar ด้านบน -->
+  <nav class="archivo-black-regular navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <img class="d-block w-25" src="./assets/images/name.png" />
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/home">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/category">CATEGORY</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/news">NEWS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/contact">CONTACT US</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="auth-buttons">
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-lock" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">Login</a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-user" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal" href="#">Register</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="user-info" style="display: none;">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-cart-shopping"></span> Cart
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
+
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-user"></span> <span id="username-display">username</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/wishlist';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-heart" style="color: red;"></i>
+                    <span>Wishlist</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/history';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: green;"></i>
+                    <span>History</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="changepasswordSwal()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-key" style="color: gold;"></i>
+                    <span>Change Password</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center" onclick="logout()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                  </div>
+                </button>
+              </li>
+
+            </ul>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- modal login -->
+  <div class="modal fade alert" id="loginModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Login</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="InputUsername" class="form-label">Username</label>
+              <input type="username" class="form-control" id="user-log-username" name="user-log-username"
+                placeholder="Enter Username" />
+            </div>
+
+            <div class="mb-3">
+              <label for="InputPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-log-password" name="user-log-password"
+                placeholder="Enter Password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal register -->
+  <div class="modal fade alert" id="registerModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Register</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="regForm">
+            <div class="mb-3">
+              <label for="RegisterEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="user-reg-email" name="user-reg-email"
+                placeholder="Enter Email" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="user-reg-username" name="user-reg-username"
+                placeholder="Enter Username" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-reg-password1" name="user-reg-password"
+                placeholder="Enter Password" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterConfirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="user-reg-password2" placeholder="Confirm Password"
+                required />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credit Card Modal -->
+  <div class="modal fade alert" id="creditModal" tabindex="-1" aria-labelledby="creditModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/creditcardicons.png">
+              <label for="cardNumber" class="form-label">CARD NUMBER</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="cardNumber" placeholder="Valid Card Number" />
+                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="mb-3">
+                  <label for="expDate" class="form-label">EXPIRATION DATE</label>
+                  <input type="tel" class="form-control" id="expDate" placeholder="MM / YY" />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <label for="cvCode" class="form-label">CV CODE</label>
+                  <input type="tel" class="form-control" id="cvCode" placeholder="CVC" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cardOwner" class="form-label">CARD OWNER</label>
+              <input type="text" class="form-control" id="cardOwner" placeholder="Card Owner Names" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Credit Card')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- promptpay -->
+  <div class="modal fade alert" id="promptpayModal" tabindex="-1" aria-labelledby="promptpayModalLabel"
+    aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/promptpay.png">
+              <img class="credit" src="./assets/images/frame.png">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Prompt Pay')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal fade alert" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row text-center">
+            <div class="col-6">
+              <img src="./assets/images/creditcardicons.png" alt="Credit Icon" class="img-fluid"
+                style="max-width: 200px;" />
+              <br>
+              <input type="radio" id="Credit" name="payment_type" value="Credit">
+              <label for="Credit">Credit Card</label>
+            </div>
+            <div class="col-6">
+              <img src="./assets/images/promptpay.png" alt="PromptPay Icon" class="img-fluid"
+                style="max-width: 60px;" />
+              <br>
+              <input type="radio" id="PromptPay" name="payment_type" value="PromptPay">
+              <label for="PromptPay">PromptPay</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="confirmPayment()">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- article -->
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 center">
+        <a href="#">
+          <img id="dynamicImage" class="img-fluid" alt="Bootstrap template" src="" />
+        </a>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        <h3 class="center" id="dynamicTitle"></h3>
+        <p id="dynamicText"></p>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center mb-2 center">
+        <button class="catagorybtn btn btn-success w-100" onclick="window.location.href='/news'">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">&copy;
+    <span id="year"> </span>
+    <span> Keyshub. All rights reserved.</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // รีโหลดหน้าเมื่อขนาดจอเปลี่ยน
+    $(window).bind("resize", function (e) {
+      this.location.reload(false);
+    });
+
+    // ปรับเวลาปี ค.ศ ที่ footer
+    let year = document.querySelector("#year");
+
+    $(document).ready(function () {
+      year.innerText = new Date().getFullYear();
+    });
+
+    // เช็ค user login
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const username = document.querySelector('input[name="user-log-username"]').value;
+      const password = document.querySelector('input[name="user-log-password"]').value;
+
+      fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+
+            localStorage.setItem('isuserLoggedIn', 'true');
+            localStorage.setItem('username', username);
+
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Welcome",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              updateNavbar();
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid credentials",
+              text: "Please try again!",
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error during login",
+            text: "please try again!",
+          });
+        });
+    });
+
+    // ลงทะเบียน
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('user-reg-email').value;
+      const username = document.getElementById('user-reg-username').value;
+      const password = document.getElementById('user-reg-password1').value;
+      const confirmPassword = document.getElementById('user-reg-password2').value;
+
+      if (password !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "Passwords do not match",
+          text: "please try again!",
+        });
+        return;
+      }
+
+      const response = await fetch('/api/reg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          username,
+          password,
+        }),
+      });
+
+      const result = await response.text();
+
+      if (response.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User registered successfully",
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: result,
+          text: "Please try again!",
+        });
+      }
+    });
+
+    // ฟังก์ชันนี้จะอัพเดต navbar
+    function updateNavbar() {
+      const username = localStorage.getItem('username');
+
+      if (username) {
+        // ซ่อนปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'none';
+        // แสดง username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'flex';
+        document.getElementById('username-display').textContent = username;
+      } else {
+        // แสดงปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'flex';
+        // ซ่อน username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      updateNavbar();
+    });
+
+    // change password
+    function changepasswordSwal() {
+      Swal.fire({
+        title: 'Change Password',
+        html: `
+          <input type="password" id="new-password" class="swal2-input" placeholder="New Password">
+          <input type="password" id="confirm-password" class="swal2-input" placeholder="Confirm Password">`,
+        focusConfirm: false,
+        preConfirm: () => {
+          const newPassword = document.getElementById('new-password').value;
+          const confirmPassword = document.getElementById('confirm-password').value;
+
+          const username = localStorage.getItem('username');
+
+          if (!newPassword || !confirmPassword) {
+            Swal.showValidationMessage('Please enter both fields');
+          } else if (newPassword !== confirmPassword) {
+            Swal.showValidationMessage('Passwords do not match');
+          } else {
+            if (!username) {
+              Swal.showValidationMessage('Username not found in local storage');
+            } else {
+              return { username, newPassword };
+            }
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const { username, newPassword } = result.value;
+
+          fetch('/api/password', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username,
+              newPassword: newPassword,
+            })
+          })
+            .then(response => {
+              console.log('Response:', response);
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Success:', data);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "User Change Password successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            })
+            .catch((error) => {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Please try again!",
+              });
+              console.error('Error:', error);
+            });
+        }
+      });
+    }
+
+    // logout
+    function logout() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
+      location.reload();
+    }
+
+    // รับค่าจาก param มาดึงรูป
+    function updateContentBasedOnParam(param) {
+      const image = document.getElementById("dynamicImage");
+      const title = document.getElementById("dynamicTitle");
+      const text = document.getElementById("dynamicText");
+
+      if (param == 2) {
+        image.src = "./assets/images/new2.jpg";
+        title.textContent = "โปรดิวเซอร์ยอมรับว่ายอดผู้เล่น XDefiant ลดลง แต่ไม่มีแผนจะปิดให้บริการเกมหลังเข้าสู่ซีซัน 4";
+        text.textContent = "Mark Rubin โปรดิวเซอร์จาก Ubisoft ยืนยันว่าเกม XDefiant ไม่มีแผนจะปิดให้บริการหลังเข้าสู่ซีซัน 4 หลังจากมีข่าวลือเมื่อช่วงสัปดาห์ที่ผ่านมา “ผมขอย้ำอย่างชัดเจนอีกครั้ง เราไม่มีแผนจะปิดตัวเกม XDefiant หลังเข้าสู่ซีซัน 4” “เมื่อสัปดาห์ที่แล้ว ผมได้เข้าประชุมเพื่อหารือเกี่ยวกับแผนปีที่ 2 สำหรับเกมของเรา แต่ตอนนี้ เรากำลังมุ่งเน้นกับการปรับปรุงทางเทคนิคต่าง ๆ (รวมถึง Netcode) และเพิ่มเนื้อหาสำหรับซีซัน 3 กับ 4” “เราทำการตลาดกับเกมนี้น้อยมาก ดังนั้นยอดผู้เล่นของเราจึงลดลงตามมา แต่เราต้องใช้เวลาทำให้เกมอยู่ในตำแหน่งที่ดีกว่านี้ ก่อนเราจะทุ่มเงินในการทำการตลาดมากขึ้น เพื่อดึงดูดคนเล่นใหม่ และคนเล่นเก่าให้กลับมาอีกครั้ง”- Mark Rubin กล่าว";
+      } else if (param == 3) {
+        image.src = "./assets/images/new3.jpg";
+        title.textContent = "Saber Interactive เผย Roadmap ของ Warhammer 40,000: Space Marine II ยิงยาวถึงปีหน้า";
+        text.textContent = "เตรียมลุยกันต่อแบบคุ้มเกินค่าเกมไปไกล เมื่อล่าสุดทีมงาน Saber Interactive ประกาศ Roadmap การอัปเดตของ Warhammer 40,000: Space Marine II ออกมาแล้วเป็นที่เรียบร้อย โดย Roadmap นี้ มีการระบุอัปเดตใหม่ที่จะเพิ่มเข้ามาแบบฟรี ๆ ยาวถึง Season 4 เป็นอย่างต่ำ ประกอบไปด้วย - Season 2 (เพิ่มภารกิจ PvE ใหม่ ๆ, ความยากระดับ Lethal, Neo-Volkite Pistol, ศัตรูชนิดใหม่) - Season 3 (เพิ่มภารกิจ PvE ใหม่, เพิ่มโหมดใหม่แบบ PvP, เพิ่ม Arena ใหม่สำหรับใช้ใน PvP, ศัตรูชนิดใหม่, PvE, Prestige Rank, ส่วนเสริม Battle Barge) - Season 4 (Horde Mode, ศัตรูชนิดใหม่, อาวุธแบบใหม่)";
+      } else if (param == 4) {
+        image.src = "./assets/images/new4.jpg";
+        title.textContent = "Call of Duty: Black Ops 6 เปิดตัว Operator สัญชาติไทยชื่อ Rama Niran";
+        text.textContent = "เมื่อไม่นานมานี้ ทีมพัฒนา Treyarch ร่วมกับ Activision ได้เผยรายละเอียดเกี่ยวกับ Operator ต่าง ๆ ของเกม Call of Duty: Black Ops 6 ที่จะเปิดให้ใช้งานในโหมด Multiplayer ตั้งแต่วันแรก โดยหนึ่งใน Operator ใหม่ของเกมภาคนี้ มีทหารจากประเทศไทยชื่อว่า ‘Rama Niran’ ในรายละเอียดระบุว่า Niran เป็นทหารสัญชาติไทยของฝั่ง Crimson One ที่มี “สัมผัสที่หก” (Sixth Sense) ระดับเหนือชั้น ทำให้สามารถระบุตำแหน่งของศัตรูและกับดักที่คนทั่วไปไม่สามารถมองเห็นได้ นอกจากนี้ เจ้าตัวมีความเชี่ยวชาญด้านการป้องกันกับการใช้วัตถุระเบิด ด้วยความสามารถพิเศษดังกล่าว ทำให้ Niran จึงเป็นทหารที่พึ่งพาได้ในสนามรบ นอกจากนี้ ทีมงานเผยรายละเอียดเกี่ยวกับฝั่ง Crimson One ว่าเป็นทีมตัวแทนปฏิบัติการของ CIA ที่ก่อตั้งขึ้นเพื่อตามล่ากลุ่ม Rogue Black Ops โดยเฉพาะ และแน่นอนว่าทีมนี้ได้รับการรองรับจากหน่วยงาน CIA รวมถึงพวกเขาสามารถเข้าถึงข้อมูลข่าวกรองกับเครื่องมือล้ำ ๆ เพื่อทำภารกิจให้สำเร็จได้ หรืออธิบายแบบสั้นที่สุด Crimson One เป็นศัตรูของ Russell Adler กับ Frank Woods นั่นเอง Call of Duty: Black Ops 6 ออกวางจำหน่ายในวันที่ 25 ตุลาคมนี้ บนระบบ PC, PlayStation 4, PlayStation 5, Xbox One, Xbox Series และ Game Pass";
+      } else if (param == 5) {
+        image.src = "./assets/images/new5.jpg";
+        title.textContent = "Grand Theft Auto Online มีคนเล่นใหม่ถึง 1.2 ล้านคน หลังเปิดตัวโหมดเกมพิเศษเป็นแนวเอาตัวรอดจากซอมบี้";
+        text.textContent = "เว็บไซต์ GTAO Stats เผยว่าล่าสุด Grand Theft Auto Online มีคนเล่นใหม่ประมาณ 1.2 ล้านคน หลังมีการเปิดตัวโหมดเอาตัวรอดจากซอมบี้ TAO Stats ระบุว่าตั้งแต่โหมดเอาตัวรอดซอมบี้ได้เปิดให้เล่นเมื่อวันที่ 10 ตุลาคมที่ผ่านมาจนถึงตอนนี้ ได้มีคนเล่นโหมดดังกล่าวทั้งหมด 2.7 ล้านครั้ง โดยมีมากกว่า 1.2 ล้านคนที่เป็นผู้เล่น GTA Online ใหม่ โหมดใหม่ที่เปิดให้เล่นในเวลาจำกัดมีชื่อ ‘Ludendorff Cemetery Survival’ เป็นโหมดเอาตัวรอดจากซอมบี้ ที่ผู้เล่นหลายคนต้องจับอาวุธมาต่อสู้กับพวก Undead ในแผนที่สุสานเมือง North Yankton โดยพวกมันจะมาเป็นแบบกองทัพ Wave ที่ยิ่งเอาตัวรอดได้นานเท่าไหร่ ใน Wave ถัดไปพวกมันจะมาพร้อมกับปริมาณที่เยอะขึ้นเท่านั้น Ludendorff Cemetery Survival เปิดเล่นเฉพาะเวลา ณ ตอนนี้ จนถึงวันที่ 23 ตุลาคมในทุกแพลตฟอร์ม เนื่องจากมีเวลาให้เล่นจำกัด ฉะนั้นใครที่สนใจก็เข้าไปลองเล่นกันได้ก่อนที่จะหายไป";
+      } else if (param == 6) {
+        image.src = "./assets/images/new6.jpg";
+        title.textContent = "เปิดตัว Destiny: Rising เกมมือถือเล่นฟรี เตรียมทดสอบ Closed Beta ครั้งแรก วันที่ 1 พ.ย. นี้ บน iOS, Android";
+        text.textContent = "ทีมพัฒนา NetEase Games ร่วมกับ Bungie ได้ประกาศเปิดตัว Destiny: Rising เกมมือถือแบบเล่นฟรีที่สร้างจากแฟรนไชส์ดัง และมีแผนจะเปิดให้เล่นบนอุปกรณ์ iOS กับ Android Destiny: Rising เป็นเกมที่สร้างด้วยความร่วมมือระหว่าง NetEase Games กับ Bungie โดยตัวเกมเป็นแนวยิง RPG ที่มีทั้งมุมกล้อง First-Person กับ Third-Person และมีองค์ประกอบ Loot Shoot เหมือนภาคต้นฉบับ ส่วนเนื้อเรื่องของเกมจะเป็นไทม์ไลน์แยกจากเกมหลัก เน้นการเล่าเรื่องในช่วงก่อนยุค Dark Age และมีตัวละครหลากหลายซึ่งมีประวัติความเป็นมากับสกิลไม่เหมือนกัน ตัวเกมมีทั้งการเล่นแบบคนเดียว, CO-OP และ PVP ซึ่งมีโหมดเกมเก่าจากภาคหลัก และโหมดเกมใหม่ที่ออกแบบมาเพื่อภาค Rising โดยเฉพาะ และแน่นอน ผู้เล่นทุกคนสามารถลองสัมผัสเกมนี้ได้ฟรีเมื่อถึงวันเปิดให้บริการแล้ว";
+      } else if (param == 7) {
+        image.src = "./assets/images/new7.jpg";
+        title.textContent = "“Secret Level” แอนิเมชันรวมตอนสั้นจากสารพัดเกมดัง มี Trailer ใหม่หลุดมาพร้อมชื่อนักพากย์แล้ว";
+        text.textContent = "แม้จะยังเหลือเวลาอีกสักพักก่อนที่ซีรีส์ “Secret Level” จะออกฉาย แต่ล่าสุดก็ดูเหมือนว่าจะมี Trailer ตัวใหม่ หลุดออกมาแล้วบนโลกอินเทอร์เน็ต ซึ่งคราวนี้มาพร้อมกับเสียงพากย์ที่ทำให้สามารถระบุตัวนักพากย์ได้หลายคนทีเดียว โดย Trailer ดังกล่าว หลุดขึ้นมาบน Telegram และถูกนำมาเผยแพร่ต่อโดยสื่อ MP1st อีกทีหนึ่ง แสดงให้เห็นว่า Trailer นี้ยังไม่เสร็จสมบูรณ์ เพราะในบางฉากนั้นก็ยังทำ CG ไม่เรียบร้อย แต่อย่างไรก็ตาม ก็มีเสียงพากย์ที่ครบถ้วน ทำให้รวบรวมออกมาเป็นลิสต์รายชื่อนักพากย์ได้ดังต่อไปนี้  – Arnold Schwarzenegger – Kevin Hart – Keanu Reeves – Heaven Hart – Temuera Morrison – Ariana Greenblatt – Emily Swallow – Gabriel Luna – Ricky Whittle – Patrick Schwarzenegger – Merle Dandridge – Claudia Doumit – Adewale Akinnuoye-Agbaje – Clive Standen – Michael Beach รายชื่อดังกล่าว ยังไม่ได้รับการยืนยันจากทีมสร้าง และต้องรอให้เปิดเผยแบบเป็นทางการอีกครั้ง โดยสำหรับซีรีส์ Secret Level มีกำหนดฉายในวันที่ 10 ธันวาคมนี้ บนแพลตฟอร์ม Prime Video";
+      } else if (param == 8) {
+        image.src = "./assets/images/new8.jpg";
+        title.textContent = "แอปฯ HoYoLAB ปล่อยอัปเดตบน iOS ให้ผู้ใช้ตั้งนาฬิกาปลุกเป็นเสียงตัวละครจาก Genshin Impact ได้แล้ว";
+        text.textContent = "“HoYoLAB” แอปพลิเคชันรวมสารพัดเครื่องมือของเกมจากค่าย HoYoverse มีอัปเดตใหม่บน iOS ที่ทำให้ผู้ใช้สามารถตั้งนาฬิกาปลุก เป็นเสียงพากย์จากเหล่าตัวละครใน Genshin Impact ได้แล้ว โดยตัวแอปฯ อาจจะยังไม่ขึ้นอัปเดตสำหรับผู้ใช้ iOS บางคน สามารถไปที่ App Store แล้วค้นหา “HoYoLAB” จากนั้นให้กดเข้าหน้ารายละเอียดแอปฯ โดยตรง จะพบปุ่ม Update ให้กดอัปเดตเป็นเวอร์ชัน 3.1.1 ได้ทันที ส่วนวิธีการตั้งเสียงนาฬิกาปลุก ทำได้ดังนี้ 1. เข้าแอปฯ HoYoLAB แล้วกดมาที่แท็บแรก (รูปบ้าน) 2. กดเลือกแท็บด้านบน, แท็บที่ 3 ที่เขียนว่า “ตัวละคร” / “Characters” หรือชื่อตัวละครต่าง ๆ หากเราเคยเลือกไว้ก่อนแล้ว 3. กดที่แท็บนี้อีกรอบ เพื่อเลือกตัวละครใหม่ โดยกดมาที่ไอคอนเกม Genshin Impact แล้วเลือกตัวละครที่ต้องการ 4. บริเวณด้านขวา จะมีไอคอนรูปนาฬิกาปลุก (ที่มีป้าย Beta) ให้กดเข้ามาได้เลย 5. เข้าเมนู “เสียงปลุกตัวละคร” , เลือกตัวละครใหม่อีกรอบ แล้วเลือกเสียงปลุกที่ต้องการ ซึ่งจะสามารถเลือกได้ 4 ภาษา และกดพรีวิวดูก่อนได้ 6. กด “ส่ง” จากนั้นเลือกตั้งค่าส่วนอื่น ๆ (ปลุกซ้ำ, เลื่อนปลุก, เวลาที่จะปลุก) 7. กดสวิตช์ “เปิดนาฬิกาปลุก” ซึ่งตัวแอปฯ จะร้องขอให้เรากดอนุญาตการแจ้งเตือนก่อนด้วย 8. ตั้งค่าเสร็จเรียบร้อย ทั้งนี้ปัจจุบันก็จะยังมีเฉพาะบน iOS, จำกัดอยู่แค่ Genshin Impact เกมเดียวก่อน และบางตัวละคร หรือตัวละครที่ใหม่มาก ๆ เช่น Xilonen ก็จะยังไม่มีให้ตั้งเสียงปลุก โดยต้องรอดูว่าหลังจากนี้จะมีเพิ่มเข้ามาให้กับเกมอื่น ๆ อย่าง Honkai: Star Rail และ Zenless Zone Zero ด้วยหรือไม่";
+      } else if (param == 9) {
+        image.src = "./assets/images/new9.jpg";
+        title.textContent = "ลือว่า Hogwarts Legacy จะมี Definitive Edition เพิ่มคอนเทนต์กินระยะเวลา 10-15 ชั่วโมง อาจวางขายในปีหน้า";
+        text.textContent = "การผจญภัยรอบรั้วฮอกวอตส์อาจยังไม่จบ เมื่อล่าสุดมีข่าวลือน่าสนใจว่าเกม Hogwarts Legacy กำลังจะมี “Definitive Edition” ที่เพิ่มเติมคอนเทนต์ใหม่ ๆ ออกวางจำหน่ายภายในปีหน้า โดยข่าวนี้ก็ไม่ได้มาจากใครอื่น แต่เป็นคุณ Tom Henderson มือปล่อยข่าวลือเบอร์ต้น ๆ แห่งวงการเกม ซึ่งเจ้าตัวออกมาเปิดเผยและสรุปได้ดังนี้ ตัวเกม Definitive Edition จะมีคอนเทนต์ใหม่ที่รวมกันแล้วกินระยะเวลาได้ 10-15 ชั่วโมง เพิ่มเนื้อเรื่อง, เควสต์ย่อย และชุดเครื่องแต่งกายใหม่ ๆ กิจกรรมใหม่ ๆ ที่สามารถทำได้ในฮอกวอตส์ อาจวางจำหน่ายภายในปี 2025 ใครมีตัวเกมหลักอยู่แล้ว สามารถซื้อเฉพาะคอนเทนต์เสริมเป็น DLC ได้ โดยราคาที่ต้องซื้อเพิ่มน่าจะอยู่ราว ๆ 20-30 เหรียญฯ อย่างไรก็ตาม ข้อมูลเหล่านี้ก็ยังไม่ได้รับการยืนยัน และต้องจับตาดูว่าทางผู้จัดจำหน่ายอย่าง Warner Bros. จะเปิดตัว Hogwarts Legacy Definitive Edition ออกมาจริง ๆ หรือไม่ ในอนาคตอันใกล้นี้";
+      } else if (param == 10) {
+        image.src = "./assets/images/new10.jpg";
+        title.textContent = "Steam เพิ่มป้ายบอกก่อนจ่ายเงิน ว่านี่คือการซื้อสิทธิ์เพื่อเข้าถึงเกม ไม่ใช่การเป็นเจ้าของเกมจริง ๆ";
+        text.textContent = "Steam ปรับเปลี่ยนการแสดงผลใหม่ในหน้าตะกร้าก่อนจ่ายเงิน โดยจะขึ้นข้อความบอกผู้ใช้ว่านี่คือการซื้อสิทธิ์เพื่อเข้าถึงตัวเกม ไม่ใช่การเป็นเจ้าของเกมแต่อย่างใด โดยข้อความดังกล่าว ถูกระบุไว้สั้น ๆ ว่า “การสั่งซื้อผลิตภัณฑ์ดิจิทัลจะมอบใบอนุญาตสิทธิ์สำหรับผลิตภัณฑ์บน Steam” หรือเวอร์ชันภาษาอังกฤษคือ “A purchase of a digital product grants a license for the product on Steam.” ซึ่งเดิมทีการซื้อเกมบน Steam ก็อยู่ในรูปแบบนี้อยู่แล้ว แต่สาเหตุที่เพิ่งมีข้อความขึ้นมาแจ้งไว้ ก็คาดว่าเป็นการสื่อสารให้ชัดเจนขึ้น เพื่อสอดรับกับกฎหมายฉบับใหม่ของรัฐแคลิฟอร์เนีย ซึ่งกำหนดให้ร้านค้าต้องแจ้งผู้บริโภค ว่าสินค้าดิจิทัลที่ซื้อไปนั้นสามารถถูกยึดคืนได้ ไม่ใช่การเป็นเจ้าของสินค้านั้นจริง ๆ และไม่ใช่แค่ Steam, เพราะปัจจุบันหลาย ๆ แพลตฟอร์มออนไลน์ก็เริ่มใส่ข้อความขึ้นมาแจ้งเตือนในลักษณะเดียวกันแล้ว (ก่อนผู้ใช้จะกดชำระเงิน) แต่ที่น่าสนใจก็เห็นจะเป็นฝั่งของ GOG, อีกหนึ่งแพลตฟอร์มขายเกม ซึ่งใช้โอกาสนี้ให้เป็นประโยชน์ด้วยการขึ้นข้อความไว้เช่นกัน แต่บอกว่า “การสั่งซื้อสินค้าดิจิทัลบน GOG จะมอบตัวติดตั้งเกมแบบออฟไลน์ให้แก่คุณ, ซึ่งไม่สามารถถูกยึดคืนไปจากคุณได้“ อันเป็นเพราะ GOG วางจำหน่ายเกมแบบ DRM-free นั่นเอง ถือเป็นนโยบายและจุดเด่นของพวกเขามานานแล้ว";
+      } else if (param == 11) {
+        image.src = "./assets/images/new11.jpg";
+        title.textContent = "Honkai: Star Rail เผยโฉมอาร์ต ‘ผู้จากจรลืมหวน’ ร่างใหม่ของ Tingyun เป็นคาแรคเตอร์เล่นได้แน่นอนในเวอร์ชัน 2.7";
+        text.textContent = "ล่าสุด ทีมพัฒนา HoYoverse (miHoYo) ได้เผยโฉมอาร์ตตัวละครใหม่ที่จะเล่นได้ในอนาคตอย่าง ‘ผู้จากจรลืมหวน’ (Fugue) หรือ Tingyun ในร่างใหม่ Tingyun เป็นตัวละครระดับ 4 ดาว ประสาน/ไฟฟ้า ทำหน้าที่บัฟพลังโจมตีและฟื้นฟูพลังงานให้กับฝ่ายเรา แต่ ‘ผู้จากจรลืมหวน’ จะเป็นตัวละครระดับ 5 ดาว ไฟ/ลบล้าง ซึ่งอาจมีบทบาทเป็น DPS (คล้าย Acheron), ดีบัฟฝ่ายศัตรู หรือทำดาเมจแบบ DoT โดยรายละเอียดความสามารถของตัวละครนี้จะเปิดเผยอีกครั้งในอนาคต ถ้าอ้างอิงจาก Drip Marketing รอบที่ผ่านมาทั้งหมด คาดว่า ‘ผู้จากจรลืมหวน’ จะเปิดให้ปลดล็อกผ่านตู้ Gacha ในช่วงครึ่งหลังเวอร์ชัน 2.7 ถ้าหากแฟน ๆ อยากเก็บตัวละครนี้ ก็เตรียมตัวสะสมตั๋วรุ้งไว้ได้เลย";
+      } else if (param == 12) {
+        image.src = "./assets/images/new12.jpg";
+        title.textContent = "Red Dead Redemption เวอร์ชัน PC วางจำหน่ายในโซนไทย ราคา 1,599 บาท";
+        text.textContent = "หน้าร้านค้า Steam, Epic Games Store และ Rockstar Games Store ได้เผยราคาอย่างเป็นทางการสำหรับเกม Red Dead Redemption ภาคแรก เวอร์ชัน PC โดยในโซนไทยขายราคาที่ 1,599 บาท (49.99 เหรียญฯ) Red Dead Redemption ที่วางจำหน่ายใน PC คล้ายกับเวอร์ชัน Switch กับ PlayStation 4 คือมีทั้งเกมหลัก, เนื้อหาเสริม Undead Nightmare และคอนเทนต์โบนัสจาก Game of the Year Edition แต่จะไม่มีโหมด Multiplayer ให้เล่น นอกจากนี้ เกมเวอร์ชัน PC สามารถรองรับความละเอียดภาพระดับ 4K, Refresh Rate 144 Hz ขึ้นไป, หน้าจอ Ultrawide กับ Super Ultrawide, เทคโนโลยี Upscale อย่าง Nvidia DLSS 3.7 กับ AMD FSR 3.0,  DLSS และตัวเลือกการตั้งค่ากราฟิกต่าง ๆ มากมาย Red Dead Redemption เวอร์ชัน PC ถือว่าเป็นการเปิดตัวที่แฟน ๆ Rockstar Games หลายคนรอคอยมานานถึง 14 ปี ถ้าหากเกมเมอร์สนใจ ก็สามารถสอดส่องรายละเอียดเพิ่มเติมได้ที่ Steam";
+      } else {
+        image.src = "./assets/images/new1.jpg";
+        title.textContent = "Warhammer 40,000: Space Marine 2 ทำยอดขายทะลุ 4.5 ล้านชุด หลังเกมออกวางจำหน่ายผ่านไป 1 เดือน";
+        text.textContent = "ตัวแทนจำหน่าย Focus Entertainment ร่วมกับทีมพัฒนา Saber Interactive ประกาศว่าเกม Warhammer 40,000: Space Marine 2 สามารถทำยอดขายทะลุ 4.5 ล้านชุด หลังจากเกมออกวางจำหน่ายผ่านไป 1 เดือน “มีผู้เล่นมากกว่า 4.5 ล้านคนได้เข้าถึงเกม Warhammer 40,000: Space Marine 2 เราอยากจะขอบคุณเหล่า Space Marine ทุกคนที่เข้าร่วมการต่อสู้มาตลอด 1 เดือนที่ผ่านมา จงเตรียมตัวไว้ เพราะนี่เป็นแค่จุดเริ่มต้นเท่านั้น” – Saber Interactive กล่าว Warhammer 40,000: Space Marine 2 ออกวางจำหน่ายครั้งแรก เมื่อวันที่ 9 กันยายนที่ผ่านมา แล้วเกมดังกล่าวทำยอดขายได้ 2 ล้านชุด เมื่อวันที่ 10 กันยายน หรือหมายความว่าเกมนี้ขายได้เพิ่มขึ้นประมาณ 2.5 ล้านชุด Warhammer 40,000: Space Marine 2 ลงในระบบ PC, PlayStation 5 และ Xbox Series";
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('news');
+
+    updateContentBasedOnParam(articleId);
+
+    // delete game จากตะกร้า
+    function deleteFromCart(gameName) {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/delete/${gameName}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Removed game from cart",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error removing from cart",
+            text: "Please try again!"
+          });
+        });
+    }
+
+    // โชว์เช็คเอาท์ในตะกร้า
+    function checkout() {
+      var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+      paymentModal.show();
+    }
+
+    // เลือก payment
+    function confirmPayment() {
+      var paymentType = document.querySelector('input[name="payment_type"]:checked');
+
+      if (paymentType) {
+        var paymentModal = document.getElementById('paymentModal');
+        var bootstrapPaymentModal = bootstrap.Modal.getInstance(paymentModal);
+
+        if (paymentType.value === 'Credit') {
+          var creditModal = new bootstrap.Modal(document.getElementById('creditModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          creditModal.show();
+
+          creditModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        } else if (paymentType.value === 'PromptPay') {
+          var promptpayModal = new bootstrap.Modal(document.getElementById('promptpayModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          promptpayModal.show();
+
+          promptpayModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Select payment method",
+          text: "Please try again!"
+        });
+      }
+    }
+
+    // กดจ่ายเงิน
+    function payment(paymentType) {
+      const cartItems = [];
+      const cartElements = document.querySelectorAll('.dropdown-item');
+
+      cartElements.forEach(item => {
+        const gameNameElement = item.querySelector('.game-name');
+
+        if (gameNameElement) {
+          const gameName = gameNameElement.innerText;
+          const quantity = item.querySelector('.quantity-select').value;
+
+          cartItems.push({ gameName, quantity });
+        } else {
+          console.error('Error: game name element not found in cart item.');
+        }
+      });
+
+      const username = localStorage.getItem('username');
+
+      fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, cartItems, paymentType })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Payment complete",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error processing payment",
+            text: "Please try again!"
+          });
+          console.error('Error during payment:', error);
+        });
+    }
+
+    // โหลดตะกร้า
+    function loadCartItems() {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/getcart/${username}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch cart items');
+          }
+          return response.json();
+        })
+        .then(cartItems => {
+          const dropdownMenu = document.querySelector('.dropdown-menu');
+          dropdownMenu.innerHTML = ''; // Clear previous cart items
+
+          let totalPrice = 0;
+
+          if (cartItems.length === 0) {
+            // If the cart is empty, show a message and don't display the checkout button
+            const emptyCartMessage = document.createElement('li');
+            emptyCartMessage.classList.add('text-center', 'mt-2');
+            emptyCartMessage.innerHTML = 'Your cart is empty.';
+            dropdownMenu.appendChild(emptyCartMessage);
+            return; // Exit the function early
+          }
+
+          // Loop through each cart item and display it in the dropdown
+          cartItems.forEach(item => {
+            const priceAfterDiscount = item.price - (item.price * item.discount / 100);
+
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+          <div class="dropdown-item">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="./assets/images/${item.cart.replace(/[: ]/g, '_')}.jpg" alt="${item.cart}" style="width: 50px; height: 50px; margin-right: 10px;" />
+                <div class="item-info">
+                  <span class="game-name">${item.cart}</span><br />
+                  <span style="color: green;" class="item-price" id="price-${item.cart.replace(/[: ]/g, '_')}">Price: $${priceAfterDiscount.toFixed(2)}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <select class="form-select form-select-sm ms-1 mb-2 quantity-select" style="width: 70px;">
+                  ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+                </select>
+                <button class="btn btn-danger btn-sm ms-1 mb-2" onclick="deleteFromCart(&quot;${item.cart}&quot;)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+            dropdownMenu.appendChild(listItem);
+
+            const quantitySelect = listItem.querySelector('.quantity-select');
+            quantitySelect.value = 1;
+            totalPrice += priceAfterDiscount;
+
+            // Update the price and total when quantity changes
+            quantitySelect.addEventListener('change', () => {
+              const selectedQuantity = parseInt(quantitySelect.value, 10);
+              const updatedPrice = (priceAfterDiscount * selectedQuantity).toFixed(2);
+              const priceElement = document.getElementById(`price-${item.cart.replace(/[: ]/g, '_')}`);
+              priceElement.innerHTML = `Price: $${updatedPrice}`;
+
+              // Recalculate total price
+              totalPrice = 0;
+              document.querySelectorAll('.quantity-select').forEach(select => {
+                const itemQuantity = parseInt(select.value, 10);
+                const itemPrice = parseFloat(select.closest('li').querySelector('.item-price').innerText.replace('Price: $', '')) / itemQuantity;
+                totalPrice += (itemPrice * itemQuantity);
+              });
+
+              const checkoutButton = document.querySelector('.checkout-button .btn');
+              checkoutButton.innerHTML = `Checkout: $${totalPrice.toFixed(2)}`;
+            });
+          });
+
+          // Add checkout button if there are cart items
+          const checkoutButton = document.createElement('div');
+          checkoutButton.classList.add('text-center', 'mt-2', 'checkout-button');
+          checkoutButton.innerHTML = `
+        <button class="btn btn-success btn-lg" onclick="checkout()">Checkout: $${totalPrice.toFixed(2)}</button>
+      `;
+          dropdownMenu.appendChild(checkoutButton);
+        })
+        .catch(error => {
+          console.error('Error loading cart items:', error);
+        });
+    }
+
+    window.onload = loadCartItems;
+
+  </script>
+</body>
+
+
+</html>
