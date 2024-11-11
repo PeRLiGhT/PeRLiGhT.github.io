@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyshub</title>
+  <link rel="shortcut icon" href="./assets/images/logo.ico" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Kanit&family=Righteous&display=swap"
+    rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    crossorigin="anonymous" />
+</head>
+
+<body class="kanit-regular" style="margin: 0px; background-color:#d4d4d4;">
+  <!-- navbar ด้านบน -->
+  <nav class="archivo-black-regular navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <img class="d-block w-25" src="./assets/images/name.png" />
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/home">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/category">CATEGORY</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/news">NEWS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/contact">CONTACT US</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="auth-buttons">
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-lock" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">Login</a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-user" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal" href="#">Register</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="user-info" style="display: none;">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-cart-shopping"></span> Cart
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart"></ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-user"></span> <span id="username-display">username</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/wishlist';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-heart" style="color: red;"></i>
+                    <span>Wishlist</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/history';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: green;"></i>
+                    <span>History</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="changepasswordSwal()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-key" style="color: gold;"></i>
+                    <span>Change Password</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center" onclick="logout()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                  </div>
+                </button>
+              </li>
+
+            </ul>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- modal login -->
+  <div class="modal fade alert" id="loginModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Login</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="InputUsername" class="form-label">Username</label>
+              <input type="username" class="form-control" id="user-log-username" name="user-log-username"
+                placeholder="Enter Username" />
+            </div>
+
+            <div class="mb-3">
+              <label for="InputPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-log-password" name="user-log-password"
+                placeholder="Enter Password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal register -->
+  <div class="modal fade alert" id="registerModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Register</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="regForm">
+            <div class="mb-3">
+              <label for="RegisterEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="user-reg-email" name="user-reg-email"
+                placeholder="Enter Email" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="user-reg-username" name="user-reg-username"
+                placeholder="Enter Username" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-reg-password1" name="user-reg-password"
+                placeholder="Enter Password" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterConfirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="user-reg-password2" placeholder="Confirm Password"
+                required />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credit Card Modal -->
+  <div class="modal fade alert" id="creditModal" tabindex="-1" aria-labelledby="creditModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/creditcardicons.png">
+              <label for="cardNumber" class="form-label">CARD NUMBER</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="cardNumber" placeholder="Valid Card Number" />
+                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="mb-3">
+                  <label for="expDate" class="form-label">EXPIRATION DATE</label>
+                  <input type="tel" class="form-control" id="expDate" placeholder="MM / YY" />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <label for="cvCode" class="form-label">CV CODE</label>
+                  <input type="tel" class="form-control" id="cvCode" placeholder="CVC" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cardOwner" class="form-label">CARD OWNER</label>
+              <input type="text" class="form-control" id="cardOwner" placeholder="Card Owner Names" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Credit Card')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- promptpay -->
+  <div class="modal fade alert" id="promptpayModal" tabindex="-1" aria-labelledby="promptpayModalLabel"
+    aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/promptpay.png">
+              <img class="credit" src="./assets/images/frame.png">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Prompt Pay')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal fade alert" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row text-center">
+            <div class="col-6">
+              <img src="./assets/images/creditcardicons.png" alt="Credit Icon" class="img-fluid"
+                style="max-width: 200px;" />
+              <br>
+              <input type="radio" id="Credit" name="payment_type" value="Credit">
+              <label for="Credit">Credit Card</label>
+            </div>
+            <div class="col-6">
+              <img src="./assets/images/promptpay.png" alt="PromptPay Icon" class="img-fluid"
+                style="max-width: 60px;" />
+              <br>
+              <input type="radio" id="PromptPay" name="payment_type" value="PromptPay">
+              <label for="PromptPay">PromptPay</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="confirmPayment()">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- news -->
+  <div class="container mt-3">
+    <div class="page">
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new1.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Warhammer 40,000: Space Marine 2 ทำยอดขายทะลุ 4.5 ล้านชุด
+                หลังเกมออกวางจำหน่ายผ่านไป 1 เดือน</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(1)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new2.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">โปรดิวเซอร์ยอมรับว่ายอดผู้เล่น XDefiant ลดลง
+                แต่ไม่มีแผนจะปิดให้บริการเกมหลังเข้าสู่ซีซัน 4</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(2)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new3.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Saber Interactive เผย Roadmap ของ Warhammer 40,000: Space Marine II
+                ยิงยาวถึงปีหน้า</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(3)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new4.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Call of Duty: Black Ops 6 เปิดตัว Operator สัญชาติไทยชื่อ Rama Niran
+              </h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(4)">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new5.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Grand Theft Auto Online มีคนเล่นใหม่ถึง 1.2 ล้านคน
+                หลังเปิดตัวโหมดเกมพิเศษเป็นแนวเอาตัวรอดจากซอมบี้</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(5)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new6.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">เปิดตัว Destiny: Rising เกมมือถือเล่นฟรี เตรียมทดสอบ Closed Beta
+                ครั้งแรก วันที่ 1 พ.ย. นี้ บน iOS, Android</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(6)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new7.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">“Secret Level” แอนิเมชันรวมตอนสั้นจากสารพัดเกมดัง มี Trailer
+                ใหม่หลุดมาพร้อมชื่อนักพากย์แล้ว</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(7)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new8.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">แอปฯ HoYoLAB ปล่อยอัปเดตบน iOS
+                ให้ผู้ใช้ตั้งนาฬิกาปลุกเป็นเสียงตัวละครจาก Genshin Impact ได้แล้ว</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(8)">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new9.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">ลือว่า Hogwarts Legacy จะมี Definitive Edition เพิ่มคอนเทนต์กินระยะเวลา
+                10-15 ชั่วโมง อาจวางขายในปีหน้า</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(9)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new10.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Steam เพิ่มป้ายบอกก่อนจ่ายเงิน ว่านี่คือการซื้อสิทธิ์เพื่อเข้าถึงเกม
+                ไม่ใช่การเป็นเจ้าของเกมจริง ๆ</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(10)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new11.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Honkai: Star Rail เผยโฉมอาร์ต ‘ผู้จากจรลืมหวน’ ร่างใหม่ของ Tingyun
+                เป็นคาแรคเตอร์เล่นได้แน่นอนในเวอร์ชัน 2.7</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(11)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 mt-3">
+          <div class="card mb-4 h-100">
+            <img src="./assets/images/new12.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title text-center">Red Dead Redemption เวอร์ชัน PC วางจำหน่ายในโซนไทย ราคา 1,599 บาท</h5>
+            </div>
+            <div class="btn-readmore center col-12">
+              <a class="btn btn-success w-100" onclick="redirectToArticle(12)">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pagination mb-3">
+      <a href="javascript:void(0)" class="page-btn" onclick="showPage(1)">1</a>
+      <!-- <a href="javascript:void(0)" class="page-btn" onclick="showPage(2)">2</a>
+      <a href="javascript:void(0)" class="page-btn" onclick="showPage(3)">3</a>
+      <a href="javascript:void(0)" class="page-btn" onclick="showPage(4)">4</a>
+      <a href="javascript:void(0)" class="page-btn" onclick="showPage(5)">5</a> -->
+    </div>
+
+  </div>
+
+  <!-- footer -->
+  <div class="footer">&copy;
+    <span id="year"> </span>
+    <span> Keyshub. All rights reserved.</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // รีโหลดหน้าเมื่อขนาดจอเปลี่ยน
+    $(window).bind("resize", function (e) {
+      this.location.reload(false);
+    });
+
+    // ปรับเวลาปี ค.ศ ที่ footer
+    let year = document.querySelector("#year");
+
+    $(document).ready(function () {
+      year.innerText = new Date().getFullYear();
+    });
+
+    // เช็ค user login
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const username = document.querySelector('input[name="user-log-username"]').value;
+      const password = document.querySelector('input[name="user-log-password"]').value;
+
+      fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+
+            localStorage.setItem('isuserLoggedIn', 'true');
+            localStorage.setItem('username', username);
+
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Welcome",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              updateNavbar();
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid credentials",
+              text: "Please try again!",
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error during login",
+            text: "please try again!",
+          });
+        });
+    });
+
+    // ลงทะเบียน
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('user-reg-email').value;
+      const username = document.getElementById('user-reg-username').value;
+      const password = document.getElementById('user-reg-password1').value;
+      const confirmPassword = document.getElementById('user-reg-password2').value;
+
+      if (password !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "Passwords do not match",
+          text: "please try again!",
+        });
+        return;
+      }
+
+      const response = await fetch('/api/reg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          username,
+          password,
+        }),
+      });
+
+      const result = await response.text();
+
+      if (response.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User registered successfully",
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: result,
+          text: "Please try again!",
+        });
+      }
+    });
+
+    // ฟังก์ชันนี้จะอัพเดต navbar
+    function updateNavbar() {
+      const username = localStorage.getItem('username');
+
+      if (username) {
+        // ซ่อนปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'none';
+        // แสดง username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'flex';
+        document.getElementById('username-display').textContent = username;
+      } else {
+        // แสดงปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'flex';
+        // ซ่อน username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      updateNavbar();
+    });
+
+    // change password
+    function changepasswordSwal() {
+      Swal.fire({
+        title: 'Change Password',
+        html: `
+          <input type="password" id="new-password" class="swal2-input" placeholder="New Password">
+          <input type="password" id="confirm-password" class="swal2-input" placeholder="Confirm Password">`,
+        focusConfirm: false,
+        preConfirm: () => {
+          const newPassword = document.getElementById('new-password').value;
+          const confirmPassword = document.getElementById('confirm-password').value;
+
+          const username = localStorage.getItem('username');
+
+          if (!newPassword || !confirmPassword) {
+            Swal.showValidationMessage('Please enter both fields');
+          } else if (newPassword !== confirmPassword) {
+            Swal.showValidationMessage('Passwords do not match');
+          } else {
+            if (!username) {
+              Swal.showValidationMessage('Username not found in local storage');
+            } else {
+              return { username, newPassword };
+            }
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const { username, newPassword } = result.value;
+
+          fetch('/api/password', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username,
+              newPassword: newPassword,
+            })
+          })
+            .then(response => {
+              console.log('Response:', response);
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Success:', data);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "User Change Password successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            })
+            .catch((error) => {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Please try again!",
+              });
+              console.error('Error:', error);
+            });
+        }
+      });
+    }
+
+    // logout
+    function logout() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
+      location.reload();
+    }
+
+    // ส่งค่า param
+    function redirectToArticle(articleId) {
+      window.location.href = `/article.html?news=${articleId}`;
+    }
+
+    // หน้า page ตอนนี้มีแค่หน้าเดียว
+    const itemsPerPage = 4;
+    let currentPage = 1;
+
+    function showPage(page) {
+      const newsItems = document.querySelectorAll('.page');
+      const totalPages = Math.ceil(newsItems.length / itemsPerPage);
+
+      newsItems.forEach(item => item.style.display = 'none');
+
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const newsToShow = Array.from(newsItems).slice(start, end);
+
+      newsToShow.forEach(item => item.style.display = 'block');
+
+      currentPage = page;
+
+      document.querySelectorAll('.pagination a').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.pagination a:nth-child(${page})`).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage(1);
+    });
+
+    // delete game จากตะกร้า
+    function deleteFromCart(gameName) {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/delete/${gameName}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Removed game from cart",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error removing from cart",
+            text: "Please try again!"
+          });
+        });
+    }
+
+    // โชว์เช็คเอาท์ในตะกร้า
+    function checkout() {
+      var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+      paymentModal.show();
+    }
+
+    // เลือก payment
+    function confirmPayment() {
+      var paymentType = document.querySelector('input[name="payment_type"]:checked');
+
+      if (paymentType) {
+        var paymentModal = document.getElementById('paymentModal');
+        var bootstrapPaymentModal = bootstrap.Modal.getInstance(paymentModal);
+
+        if (paymentType.value === 'Credit') {
+          var creditModal = new bootstrap.Modal(document.getElementById('creditModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          creditModal.show();
+
+          creditModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        } else if (paymentType.value === 'PromptPay') {
+          var promptpayModal = new bootstrap.Modal(document.getElementById('promptpayModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          promptpayModal.show();
+
+          promptpayModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Select payment method",
+          text: "Please try again!"
+        });
+      }
+    }
+
+    // กดจ่ายเงิน
+    function payment(paymentType) {
+      const cartItems = [];
+      const cartElements = document.querySelectorAll('.dropdown-item');
+
+      cartElements.forEach(item => {
+        const gameNameElement = item.querySelector('.game-name');
+
+        if (gameNameElement) {
+          const gameName = gameNameElement.innerText;
+          const quantity = item.querySelector('.quantity-select').value;
+
+          cartItems.push({ gameName, quantity });
+        } else {
+          console.error('Error: game name element not found in cart item.');
+        }
+      });
+
+      const username = localStorage.getItem('username');
+
+      fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, cartItems, paymentType })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Payment complete",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error processing payment",
+            text: "Please try again!"
+          });
+          console.error('Error during payment:', error);
+        });
+    }
+
+    // โหลดตะกร้า
+    function loadCartItems() {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/getcart/${username}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch cart items');
+          }
+          return response.json();
+        })
+        .then(cartItems => {
+          const dropdownMenu = document.querySelector('.dropdown-menu');
+          dropdownMenu.innerHTML = ''; // Clear previous cart items
+
+          let totalPrice = 0;
+
+          if (cartItems.length === 0) {
+            // If the cart is empty, show a message and don't display the checkout button
+            const emptyCartMessage = document.createElement('li');
+            emptyCartMessage.classList.add('text-center', 'mt-2');
+            emptyCartMessage.innerHTML = 'Your cart is empty.';
+            dropdownMenu.appendChild(emptyCartMessage);
+            return; // Exit the function early
+          }
+
+          // Loop through each cart item and display it in the dropdown
+          cartItems.forEach(item => {
+            const priceAfterDiscount = item.price - (item.price * item.discount / 100);
+
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+          <div class="dropdown-item">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="./assets/images/${item.cart.replace(/[: ]/g, '_')}.jpg" alt="${item.cart}" style="width: 50px; height: 50px; margin-right: 10px;" />
+                <div class="item-info">
+                  <span class="game-name">${item.cart}</span><br />
+                  <span style="color: green;" class="item-price" id="price-${item.cart.replace(/[: ]/g, '_')}">Price: $${priceAfterDiscount.toFixed(2)}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <select class="form-select form-select-sm ms-1 mb-2 quantity-select" style="width: 70px;">
+                  ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+                </select>
+                <button class="btn btn-danger btn-sm ms-1 mb-2" onclick="deleteFromCart(&quot;${item.cart}&quot;)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+            dropdownMenu.appendChild(listItem);
+
+            const quantitySelect = listItem.querySelector('.quantity-select');
+            quantitySelect.value = 1;
+            totalPrice += priceAfterDiscount;
+
+            // Update the price and total when quantity changes
+            quantitySelect.addEventListener('change', () => {
+              const selectedQuantity = parseInt(quantitySelect.value, 10);
+              const updatedPrice = (priceAfterDiscount * selectedQuantity).toFixed(2);
+              const priceElement = document.getElementById(`price-${item.cart.replace(/[: ]/g, '_')}`);
+              priceElement.innerHTML = `Price: $${updatedPrice}`;
+
+              // Recalculate total price
+              totalPrice = 0;
+              document.querySelectorAll('.quantity-select').forEach(select => {
+                const itemQuantity = parseInt(select.value, 10);
+                const itemPrice = parseFloat(select.closest('li').querySelector('.item-price').innerText.replace('Price: $', '')) / itemQuantity;
+                totalPrice += (itemPrice * itemQuantity);
+              });
+
+              const checkoutButton = document.querySelector('.checkout-button .btn');
+              checkoutButton.innerHTML = `Checkout: $${totalPrice.toFixed(2)}`;
+            });
+          });
+
+          // Add checkout button if there are cart items
+          const checkoutButton = document.createElement('div');
+          checkoutButton.classList.add('text-center', 'mt-2', 'checkout-button');
+          checkoutButton.innerHTML = `
+        <button class="btn btn-success btn-lg" onclick="checkout()">Checkout: $${totalPrice.toFixed(2)}</button>
+      `;
+          dropdownMenu.appendChild(checkoutButton);
+        })
+        .catch(error => {
+          console.error('Error loading cart items:', error);
+        });
+    }
+
+    window.onload = loadCartItems;
+  </script>
+</body>
+
+
+</html>

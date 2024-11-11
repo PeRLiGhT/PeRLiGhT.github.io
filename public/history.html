@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keyshub</title>
+  <link rel="shortcut icon" href="./assets/images/logo.ico" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Kanit&family=Righteous&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    crossorigin="anonymous" />
+</head>
+
+<body class="kanit-regular" style="margin: 0px; background-color:#d4d4d4;">
+  <!-- navbar ด้านบน -->
+  <nav class="archivo-black-regular navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <img class="d-block w-25" src="./assets/images/name.png" />
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/home">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/category">CATEGORY</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/news">NEWS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/contact">CONTACT US</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="auth-buttons">
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-lock" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">Login</a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <i class="fa-solid fa-user" style="color: #fff; margin-right: 5px"></i>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal" href="#">Register</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" id="user-info" style="display: none;">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-cart-shopping"></span> Cart
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart"></ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <span class="fa-solid fa-user"></span> <span id="username-display">username</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownCart">
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/wishlist';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-heart" style="color: red;"></i>
+                    <span>Wishlist</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="window.location.href='/history';">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: green;"></i>
+                    <span>History</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center"
+                  onclick="changepasswordSwal()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-key" style="color: gold;"></i>
+                    <span>Change Password</span>
+                  </div>
+                </button>
+              </li>
+
+              <li>
+                <button class="dropdown-item btn d-flex justify-content-between align-items-center" onclick="logout()">
+                  <div class="item-info center">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                  </div>
+                </button>
+              </li>
+
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- modal login -->
+  <div class="modal fade alert" id="loginModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Login</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="InputUsername" class="form-label">Username</label>
+              <input type="username" class="form-control" id="user-log-username" name="user-log-username"
+                placeholder="Enter Username" />
+            </div>
+
+            <div class="mb-3">
+              <label for="InputPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-log-password" name="user-log-password"
+                placeholder="Enter Password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal register -->
+  <div class="modal fade alert" id="registerModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Register</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="regForm">
+            <div class="mb-3">
+              <label for="RegisterEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="user-reg-email" name="user-reg-email"
+                placeholder="Enter Email" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="user-reg-username" name="user-reg-username"
+                placeholder="Enter Username" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="user-reg-password1" name="user-reg-password"
+                placeholder="Enter Password" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="RegisterConfirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="user-reg-password2" placeholder="Confirm Password"
+                required />
+            </div>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- review -->
+  <div class="modal fade alert" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Review <span id="reviewText"></span></h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <textarea class="form-control" id="reviewMessage" rows="4"
+              placeholder="Enter your review here..."></textarea>
+            <div class="star-rating text-center mt-3">
+              <i class="fa fa-star" data-value="1"></i>
+              <i class="fa fa-star" data-value="2"></i>
+              <i class="fa fa-star" data-value="3"></i>
+              <i class="fa fa-star" data-value="4"></i>
+              <i class="fa fa-star" data-value="5"></i>
+            </div>
+            <input type="hidden" id="reviewRating" value="">
+            <button type="submit" class="btn btn-success d-block mx-auto mt-3" id="submitReview" disabled>
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- getkey -->
+  <div class="modal fade alert" id="getkeyModal" tabindex="-1" aria-labelledby="getkeyModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="lineModalLabel">Get Key</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span id="getkeyText"></span><span id="keyText"> : xxxx-xxxx-xxxx-xxxx</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credit Card Modal -->
+  <div class="modal fade alert" id="creditModal" tabindex="-1" aria-labelledby="creditModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/creditcardicons.png">
+              <label for="cardNumber" class="form-label">CARD NUMBER</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="cardNumber" placeholder="Valid Card Number" />
+                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="mb-3">
+                  <label for="expDate" class="form-label">EXPIRATION DATE</label>
+                  <input type="tel" class="form-control" id="expDate" placeholder="MM / YY" />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <label for="cvCode" class="form-label">CV CODE</label>
+                  <input type="tel" class="form-control" id="cvCode" placeholder="CVC" />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cardOwner" class="form-label">CARD OWNER</label>
+              <input type="text" class="form-control" id="cardOwner" placeholder="Card Owner Names" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Credit Card')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- promptpay -->
+  <div class="modal fade alert" id="promptpayModal" tabindex="-1" aria-labelledby="promptpayModalLabel"
+    aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditModalLabel">Payment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="mb-3">
+              <img class="credit" src="./assets/images/promptpay.png">
+              <img class="credit" src="./assets/images/frame.png">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" onclick="payment('Prompt Pay')">Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal fade alert" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row text-center">
+            <div class="col-6">
+              <img src="./assets/images/creditcardicons.png" alt="Credit Icon" class="img-fluid"
+                style="max-width: 200px;" />
+              <br>
+              <input type="radio" id="Credit" name="payment_type" value="Credit">
+              <label for="Credit">Credit Card</label>
+            </div>
+            <div class="col-6">
+              <img src="./assets/images/promptpay.png" alt="PromptPay Icon" class="img-fluid"
+                style="max-width: 60px;" />
+              <br>
+              <input type="radio" id="PromptPay" name="payment_type" value="PromptPay">
+              <label for="PromptPay">PromptPay</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="confirmPayment()">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- history -->
+  <div class="container my-3">
+    <div class="row">
+      <div class="row d-flex align-items-center justify-content-between">
+        <div class="col">
+          <h3 class="righteous-regular">HISTORY</h3>
+        </div>
+      </div>
+
+      <div class="mx-auto" id="games-container">
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">&copy;
+    <span id="year"> </span>
+    <span> Keyshub. All rights reserved.</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // รีโหลดหน้าเมื่อขนาดจอเปลี่ยน
+    $(window).bind("resize", function (e) {
+      this.location.reload(false);
+    });
+
+    // ปรับเวลาปี ค.ศ ที่ footer
+    let year = document.querySelector("#year");
+
+    $(document).ready(function () {
+      year.innerText = new Date().getFullYear();
+    });
+
+    // เช็ค user login
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const username = document.querySelector('input[name="user-log-username"]').value;
+      const password = document.querySelector('input[name="user-log-password"]').value;
+
+      fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+
+            localStorage.setItem('isuserLoggedIn', 'true');
+            localStorage.setItem('username', username);
+
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Welcome",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              updateNavbar();
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid credentials",
+              text: "Please try again!",
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error during login",
+            text: "please try again!",
+          });
+        });
+    });
+
+    // ลงทะเบียน
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('user-reg-email').value;
+      const username = document.getElementById('user-reg-username').value;
+      const password = document.getElementById('user-reg-password1').value;
+      const confirmPassword = document.getElementById('user-reg-password2').value;
+
+      if (password !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "Passwords do not match",
+          text: "please try again!",
+        });
+        return;
+      }
+
+      const response = await fetch('/api/reg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          username,
+          password,
+        }),
+      });
+
+      const result = await response.text();
+
+      if (response.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User registered successfully",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: result,
+          text: "please try again!",
+        });
+      }
+    });
+
+    // ให้ดาว
+    document.querySelectorAll('.star-rating .fa-star').forEach(star => {
+      star.addEventListener('click', function () {
+        const rating = this.getAttribute('data-value');
+        document.querySelectorAll('.star-rating .fa-star').forEach(s => s.classList.remove('selected'));
+        for (let i = 0; i < rating; i++) {
+          document.querySelectorAll('.star-rating .fa-star')[i].classList.add('selected');
+        }
+        document.getElementById('reviewRating').value = rating;
+
+        document.getElementById('submitReview').disabled = false;
+      });
+    });
+
+    // กดปุ่ม submit 
+    document.getElementById('submitReview').addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const username = localStorage.getItem('username');
+      const game = document.getElementById('reviewText').innerText
+      const text = document.getElementById('reviewMessage').value;
+      const star = document.getElementById('reviewRating').value;
+
+      if (!star) {
+        Swal.fire({
+          icon: "error",
+          title: "Review before submit",
+          text: "Please try again!"
+        });
+        return;
+      }
+
+      fetch('/api/review', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          game: game,
+          text: text,
+          star: star
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error creating review');
+          }
+          return response.text();
+        })
+        .then(message => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Review Complete",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            const reviewModal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
+            reviewModal.hide();
+
+            var getkeyModal = new bootstrap.Modal(document.getElementById('getkeyModal'));
+            getkeyModal.show();
+
+            const getkeyText = document.getElementById('getkeyText');
+            getkeyText.innerHTML = `${game}`;
+
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error review",
+            text: "Please try again!"
+          });
+        });
+    });
+
+    // ฟังก์ชันนี้จะอัพเดต navbar
+    function updateNavbar() {
+      const username = localStorage.getItem('username');
+
+      if (username) {
+        // ซ่อนปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'none';
+        // แสดง username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'flex';
+        document.getElementById('username-display').textContent = username;
+      } else {
+        // แสดงปุ่ม Login และ Register
+        document.getElementById('auth-buttons').style.display = 'flex';
+        // ซ่อน username และปุ่ม Cart
+        document.getElementById('user-info').style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      updateNavbar();
+    });
+
+    // change password
+    function changepasswordSwal() {
+      Swal.fire({
+        title: 'Change Password',
+        html: `
+          <input type="password" id="new-password" class="swal2-input" placeholder="New Password">
+          <input type="password" id="confirm-password" class="swal2-input" placeholder="Confirm Password">`,
+        focusConfirm: false,
+        preConfirm: () => {
+          const newPassword = document.getElementById('new-password').value;
+          const confirmPassword = document.getElementById('confirm-password').value;
+
+          const username = localStorage.getItem('username');
+
+          if (!newPassword || !confirmPassword) {
+            Swal.showValidationMessage('Please enter both fields');
+          } else if (newPassword !== confirmPassword) {
+            Swal.showValidationMessage('Passwords do not match');
+          } else {
+            if (!username) {
+              Swal.showValidationMessage('Username not found in local storage');
+            } else {
+              return { username, newPassword };
+            }
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const { username, newPassword } = result.value;
+
+          fetch('/api/password', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username,
+              newPassword: newPassword,
+            })
+          })
+            .then(response => {
+              console.log('Response:', response);
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Success:', data);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "User Change Password successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            })
+            .catch((error) => {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Please try again!",
+              });
+              console.error('Error:', error);
+            });
+        }
+      });
+    }
+
+    // logout
+    function logout() {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
+      location.reload();
+    }
+
+    // delete game จากตะกร้า
+    function deleteFromCart(gameName) {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/delete/${gameName}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Removed game from cart",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error removing from cart",
+            text: "Please try again!"
+          });
+        });
+    }
+
+    // โชว์เช็คเอาท์ในตะกร้า
+    function checkout() {
+      var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+      paymentModal.show();
+    }
+
+    // เลือก payment
+    function confirmPayment() {
+      var paymentType = document.querySelector('input[name="payment_type"]:checked');
+
+      if (paymentType) {
+        var paymentModal = document.getElementById('paymentModal');
+        var bootstrapPaymentModal = bootstrap.Modal.getInstance(paymentModal);
+
+        if (paymentType.value === 'Credit') {
+          var creditModal = new bootstrap.Modal(document.getElementById('creditModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          creditModal.show();
+
+          creditModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        } else if (paymentType.value === 'PromptPay') {
+          var promptpayModal = new bootstrap.Modal(document.getElementById('promptpayModal'));
+
+          if (bootstrapPaymentModal) {
+            bootstrapPaymentModal.hide();
+          }
+
+          promptpayModal.show();
+
+          promptpayModal._element.addEventListener('hidden.bs.modal', function () {
+            paymentModal.removeAttribute('inert');
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Select payment method",
+          text: "Please try again!"
+        });
+      }
+    }
+
+    // กดจ่ายเงิน
+    function payment(paymentType) {
+      const cartItems = [];
+      const cartElements = document.querySelectorAll('.dropdown-item');
+
+      cartElements.forEach(item => {
+        const gameNameElement = item.querySelector('.game-name');
+
+        if (gameNameElement) {
+          const gameName = gameNameElement.innerText;
+          const quantity = item.querySelector('.quantity-select').value;
+
+          cartItems.push({ gameName, quantity });
+        } else {
+          console.error('Error: game name element not found in cart item.');
+        }
+      });
+
+      const username = localStorage.getItem('username');
+
+      fetch('/api/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, cartItems, paymentType })
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.text();
+        })
+        .then(data => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Payment complete",
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload();
+          });
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: "error",
+            title: "Error processing payment",
+            text: "Please try again!"
+          });
+          console.error('Error during payment:', error);
+        });
+    }
+
+    // โหลดตะกร้า
+    function loadCartItems() {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/getcart/${username}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch cart items');
+          }
+          return response.json();
+        })
+        .then(cartItems => {
+          const dropdownMenu = document.querySelector('.dropdown-menu');
+          dropdownMenu.innerHTML = '';
+
+          let totalPrice = 0;
+
+          if (cartItems.length === 0) {
+            const emptyCartMessage = document.createElement('li');
+            emptyCartMessage.classList.add('text-center', 'mt-2');
+            emptyCartMessage.innerHTML = 'Your cart is empty.';
+            dropdownMenu.appendChild(emptyCartMessage);
+            return;
+          }
+
+          cartItems.forEach(item => {
+            const priceAfterDiscount = item.price - (item.price * item.discount / 100);
+
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+          <div class="dropdown-item">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img src="./assets/images/${item.cart.replace(/[: ]/g, '_')}.jpg" alt="${item.cart}" style="width: 50px; height: 50px; margin-right: 10px;" />
+                <div class="item-info">
+                  <span class="game-name">${item.cart}</span><br />
+                  <span style="color: green;" class="item-price" id="price-${item.cart.replace(/[: ]/g, '_')}">Price: $${priceAfterDiscount.toFixed(2)}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <select class="form-select form-select-sm ms-1 mb-2 quantity-select" style="width: 70px;">
+                  ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+                </select>
+                <button class="btn btn-danger btn-sm ms-1 mb-2" onclick="deleteFromCart(&quot;${item.cart}&quot;)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+            dropdownMenu.appendChild(listItem);
+
+            const quantitySelect = listItem.querySelector('.quantity-select');
+            quantitySelect.value = 1;
+            totalPrice += priceAfterDiscount;
+
+            quantitySelect.addEventListener('change', () => {
+              const selectedQuantity = parseInt(quantitySelect.value, 10);
+              const updatedPrice = (priceAfterDiscount * selectedQuantity).toFixed(2);
+              const priceElement = document.getElementById(`price-${item.cart.replace(/[: ]/g, '_')}`);
+              priceElement.innerHTML = `Price: $${updatedPrice}`;
+
+              totalPrice = 0;
+              document.querySelectorAll('.quantity-select').forEach(select => {
+                const itemQuantity = parseInt(select.value, 10);
+                const itemPrice = parseFloat(select.closest('li').querySelector('.item-price').innerText.replace('Price: $', '')) / itemQuantity;
+                totalPrice += (itemPrice * itemQuantity);
+              });
+
+              const checkoutButton = document.querySelector('.checkout-button .btn');
+              checkoutButton.innerHTML = `Checkout: $${totalPrice.toFixed(2)}`;
+            });
+          });
+
+          const checkoutButton = document.createElement('div');
+          checkoutButton.classList.add('text-center', 'mt-2', 'checkout-button');
+          checkoutButton.innerHTML = `
+        <button class="btn btn-success btn-lg" onclick="checkout()">Checkout: $${totalPrice.toFixed(2)}</button>
+      `;
+          dropdownMenu.appendChild(checkoutButton);
+        })
+        .catch(error => {
+          console.error('Error loading cart items:', error);
+        });
+    }
+
+    // โหลด history
+    function loadOrderHistory() {
+      const username = localStorage.getItem('username');
+
+      fetch(`/api/history/${username}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch order history');
+          }
+          return response.json();
+        })
+        .then(historyData => {
+          const gamesContainer = document.getElementById('games-container');
+          gamesContainer.innerHTML = '';
+
+          if (historyData.length === 0) {
+            gamesContainer.innerHTML = '<p class="text-center">No order history found.</p>';
+            return;
+          }
+
+          const totalOrders = historyData.length;
+
+          historyData.forEach((order, index) => {
+            const games = order.games_list.split(',');
+            const quantity = order.games_quantity.split(',');
+            const prices = order.games_price.split(',');
+            const confirm = order.games_confirm.split(',');
+            const cancel = order.games_cancel.split(',');
+
+            const allConfirmLessThan1 = confirm.every(c => parseFloat(c) < 1);
+            const allConfirmEqual = confirm.every(c => parseFloat(c) == 1);
+            const allCancelLessThan1 = cancel.every(c => parseFloat(c) < 1);
+            const allCancelEqual = cancel.every(c => parseFloat(c) == 1);
+
+            let gameDetails = '';
+            games.forEach((game, i) => {
+              gameDetails +=
+                `<div class="d-flex flex-wrap card-text-container black align-items-center mb-3">
+                  <span class="card-text me-2"><b>${game}</b></span>
+                  <span class="card-text me-2" style="color: blue;">Quantity: ${quantity[i]}</span>
+                  <span class="card-text" style="color: green;">Price: $${parseFloat(prices[i] * quantity[i]).toFixed(2)}</span>
+                  ${allConfirmEqual ? `<button class="btn btn-success ms-2" onclick="review(&quot;${game}&quot;)">Review for get key</button>` : ''}
+                </div>`;
+            });
+
+            const totalPrice = games.reduce((total, game, i) => {
+              return total + (parseFloat(prices[i]) * parseFloat(quantity[i]));
+            }, 0);
+
+
+            const orderCard =
+              `<div class="card ${allConfirmLessThan1 && allCancelEqual ? 'border-danger' : 'border-primary'} my-3" style="padding: 0;">
+                <div class="card-header">${allConfirmLessThan1 && allCancelEqual ? 'Cancel' : ''} Order #${totalOrders - index}</div>
+                <div class="card-body text-primary">
+                  <div class="row">
+                    <div class="col-12 col-md-2">
+                      <button type="button" class="btn ${allConfirmLessThan1 && allCancelEqual ? 'btn-outline-danger' : 'btn-outline-primary'} w-100 mb-3 mb-md-0">
+                        <i class="fa-solid fa-calendar-days"></i> ${new Date(order.create_at).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+              })}
+                        <br>
+                        <span>${new Date(order.create_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                      </button>
+                    </div>
+
+                    <div class="col-12 col-md-10">
+                      <div id="timeline-wrap">
+                        <div id="timeline"></div>
+
+                        <div class="marker m1 timeline-icon one" style="${allConfirmLessThan1 && allCancelEqual ? 'background-color: red !important;' : ''}">
+                          <i class="fa fa-pencil"></i>
+                          <p class="mx-auto" style="font-size: 12px; color: black;">Order</p>
+                        </div>
+
+                        <div class="marker m2 timeline-icon two" style="${allConfirmLessThan1 && allCancelEqual ? 'background-color: red !important;' : ''}">
+                          <i class="fa fa-usd"></i>
+                          <p class="mx-auto" style="font-size: 12px; color: black;">Payment</p>
+                        </div>
+
+                        <div class="marker m3 timeline-icon three" style="${allConfirmLessThan1 && allCancelEqual ? 'background-color: red !important;' : ''}">
+                          <i class="fa fa-list"></i>
+                          <p class="mx-auto" style="font-size: 12px; color: black;" >Verify</p>
+                        </div>
+
+                        <div class="marker m4 timeline-icon four" style="${allConfirmEqual ? 'background-color: green !important;' : (allConfirmLessThan1 && allCancelEqual ? 'background-color: red !important;' : '')}">
+                          <i class="fa fa-check"></i>
+                          <p class="mx-auto" style="font-size: 12px; color: black;">Get Key</p>
+                        </div>
+                      </div>
+
+                      <h3 class="black">Game List</h3>
+                      ${gameDetails}
+                      <div class="d-flex align-items-center">
+                        <h3 class="black">Payment: <span style="color: blue;">${order.games_payment}</span></h3>
+                        <h3 class="black ms-3">Total: <span style="color: green;">$${totalPrice.toFixed(2)}</span></h3>
+                      </div>
+                      ${allConfirmLessThan1 && allCancelLessThan1 ? `<button class="btn btn-danger ms-2" onclick="cancelOrder('${order.create_at}', '${order.username}')">Cancel Order</button>` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+
+            gamesContainer.innerHTML += orderCard;
+          });
+        })
+        .catch(error => {
+          console.error('Error loading order history:', error);
+        });
+    }
+
+    // โชว์ ปุ่ม Delete
+    function toggleDeleteButtons(editButton) {
+      const cardBody = editButton.closest('.card-body');
+      const deleteButtons = cardBody.querySelectorAll('.delete-btn');
+
+      deleteButtons.forEach(button => {
+        if (button.style.display === 'none') {
+          button.style.display = 'inline-block';
+        } else {
+          button.style.display = 'none';
+        }
+      });
+    }
+
+    // โหลด review
+    function review(game) {
+      const username = localStorage.getItem('username');
+
+      fetch('/api/get-review', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, game })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.hasReviewed) {
+            var getkeyModal = new bootstrap.Modal(document.getElementById('getkeyModal'));
+            getkeyModal.show();
+
+            const getkeyText = document.getElementById('getkeyText');
+            getkeyText.innerHTML = `${game}`;
+          } else {
+            var reviewModal = new bootstrap.Modal(document.getElementById('reviewModal'));
+            reviewModal.show();
+
+            const reviewText = document.getElementById('reviewText');
+            reviewText.innerHTML = `${game}`;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching review:', error);
+        });
+    }
+
+    // แปลงเวลา
+    function formatCreateAt(create_at) {
+      const date = new Date(create_at);
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Cancel Order
+    function cancelOrder(create_at, username) {
+      Swal.fire({
+        title: 'Are you sure you want to cancel this order?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Yes',
+        denyButtonText: 'No',
+        confirmButtonColor: '#198754',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const formattedCreateAt = formatCreateAt(create_at);
+
+          fetch('/api/cancel-order', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ create_at: formattedCreateAt, username })
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Failed to cancel the order');
+              }
+              return response.json();
+            })
+            .then(data => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Order cancellation complete",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                loadOrderHistory();
+              });
+            })
+            .catch(error => {
+              console.error('Error canceling order:', error);
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Failed to cancel the order",
+                showConfirmButton: true
+              });
+            });
+        }
+      });
+    }
+
+    window.onload = function () {
+      loadCartItems();
+      loadOrderHistory();
+    };
+
+  </script>
+</body>
+
+</html>
